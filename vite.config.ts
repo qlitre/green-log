@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
       },
     }), pages()],
     ssr: {
-      external: ['@supabase/supabase-js'],
+      external: ['@supabase/supabase-js','dayjs'],
     },
   }
 })

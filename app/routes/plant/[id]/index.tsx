@@ -1,6 +1,7 @@
 import { createRoute } from 'honox/factory'
 import { findPlantById, findPlantLogsByPlantId, findPlantPhotosByPlantLogId } from '../../../db'
 import { LogPhotos } from '../../../islands/LogPhotos'
+import { jstDatetime } from '../../../utils/jstDatetime'
 import { checksupabaseAuth } from '../../../utils/checksupabaseAuth'
 
 export default createRoute(async (c) => {
@@ -41,7 +42,7 @@ export default createRoute(async (c) => {
                                 </div>
                                 <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
                                     <p>
-                                        {log.created_at}
+                                        {jstDatetime(log.created_at)}
                                     </p>
                                     <p className="mt-4 flex space-x-2 text-gray-700">
                                         {log.comment}
