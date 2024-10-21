@@ -22,7 +22,7 @@ export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, pr
     const [photoKey3, setPhotoKey3] = useState(data?.photoKey3 || '');
 
 
-    const FileInput = (keyNum: number) => {
+    const FileInput = (keyNum: KeyNum) => {
         return (
             <div>
                 <label htmlFor="photo1" class="block text-gray-700 text-sm font-bold mb-2">Photo{keyNum}</label>

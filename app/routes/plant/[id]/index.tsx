@@ -3,18 +3,30 @@ import { findPlantById, findPlantLogsByPlantId, findPlantPhotosByPlantLogId } fr
 import { LogPhotos } from '../../../islands/LogPhotos'
 import { jstDatetime } from '../../../utils/jstDatetime'
 import { checksupabaseAuth } from '../../../utils/checksupabaseAuth'
+import { LinkToHome } from '../../../components/LinkToHome'
+import { ShareX } from '../../../components/ShareX'
+import { config } from '../../../settings/siteSettings'
 
 export default createRoute(async (c) => {
     const id = c.req.param('id')
     const db = c.env.DB
     const plant = await findPlantById(db, id)
     const plantLogs = await findPlantLogsByPlantId(db, id)
-    // ログごとの写真を非同期で取得
     const logsWithPhotos = await Promise.all(plantLogs.map(async log => {
         const photos = await findPlantPhotosByPlantLogId(db, log.id)
         return { ...log, photos }
     }))
     const f = await checksupabaseAuth(c)
+    const contentUrl = `${config.siteURL}/plant/${id}/`
+    let lstComment = ''
+    const length = logsWithPhotos.length
+    if (length >= 1) {
+        lstComment = logsWithPhotos[length - 1].comment
+    }
+    let twitterTitle = plant?.name || ''
+    if (lstComment) {
+        twitterTitle += ' | ' + lstComment.slice(0, 30);
+    }
 
 
     return c.render(
@@ -64,10 +76,10 @@ export default createRoute(async (c) => {
                 </section>
             </div>
             <div className="mt-4">
-                sharex
+                <ShareX url={contentUrl} title={twitterTitle}></ShareX>
             </div>
             <div>
-                linktohome
+                <LinkToHome></LinkToHome>
             </div>
         </div>
     )

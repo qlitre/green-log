@@ -12,7 +12,7 @@ export type Plant = {
 export type PlantLog = {
     id: string;
     plant_id: string;
-    comment?: string;
+    comment: string;
     created_at: string;
     updated_at: string;
 };
