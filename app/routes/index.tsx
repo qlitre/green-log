@@ -5,7 +5,6 @@ import { PlantCard } from '../components/PlantCard'
 
 export default createRoute(async (c) => {
   const plants = await findAllPlants(c.env.DB)
-  const name = c.req.query('name') ?? 'Hono'
   return c.render(
     <div className='mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8'>
       <h2 className="text-2xl font-bold tracking-tight text-gray-900">Plants</h2>
@@ -15,6 +14,6 @@ export default createRoute(async (c) => {
         ))}
       </div>
     </div>,
-    { title: name }
+    {}
   )
 })

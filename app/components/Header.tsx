@@ -1,6 +1,7 @@
 
 import { useRequestContext } from "hono/jsx-renderer";
 import { checksupabaseAuth } from "../utils/checksupabaseAuth";
+import { config } from '../settings/siteSettings'
 
 export const Header = async () => {
     const c = useRequestContext()
@@ -10,7 +11,7 @@ export const Header = async () => {
             <div className="container mx-auto flex justify-between items-center">
                 <div className="text-xl font-bold">
                     <a href="/" className="hover:text-gray-300">
-                        Green Log
+                        {config.siteTitle}
                     </a>
                 </div>
                 <div>

@@ -5,7 +5,7 @@ import { jstDatetime } from '../../../utils/jstDatetime'
 import { checksupabaseAuth } from '../../../utils/checksupabaseAuth'
 import { LinkToHome } from '../../../components/LinkToHome'
 import { ShareX } from '../../../components/ShareX'
-import { config } from '../../../settings/siteSettings'
+import { config, photoUrlTop } from '../../../settings/siteSettings'
 
 export default createRoute(async (c) => {
     const id = c.req.param('id')
@@ -26,7 +26,6 @@ export default createRoute(async (c) => {
     if (lstComment) {
         twitterTitle += ' | ' + lstComment.slice(0, 30);
     }
-
 
     return c.render(
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -80,6 +79,6 @@ export default createRoute(async (c) => {
             <div>
                 <LinkToHome></LinkToHome>
             </div>
-        </div>
+        </div>, { title: plant?.name, description: plant?.description, contentUrl: contentUrl, thumbnailUrl: photoUrlTop + '/' + plant?.thumbnail_key, ogtype: 'article' }
     )
 })

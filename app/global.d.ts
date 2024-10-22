@@ -5,6 +5,7 @@ type Head = {
   description?: string;
   contentUrl?: string;
   thumbnailUrl?: string;
+  ogtype?: 'website' | 'article'
 }
 
 type Bindings = {
