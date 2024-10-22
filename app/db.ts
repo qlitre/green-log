@@ -1,29 +1,4 @@
-export type Plant = {
-    id: string;
-    name: string;
-    species?: string;
-    description?: string;
-    thumbnail_key?: string
-    created_at: string;
-    updated_at: string;
-};
-
-
-export type PlantLog = {
-    id: string;
-    plant_id: string;
-    comment: string;
-    created_at: string;
-    updated_at: string;
-};
-
-export type PlantPhoto = {
-    id: string;
-    plant_log_id: string;
-    photo_key: string;
-    created_at: string;
-    updated_at: string;
-}
+import type { Plant, PlantLog, PlantPhoto } from "./types";
 
 export const findAllPlants = async (db: D1Database) => {
     const { results } = await db.prepare('SELECT * FROM plants ORDER BY created_at DESC').all<Plant>()

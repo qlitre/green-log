@@ -1,7 +1,10 @@
 import { } from 'hono'
 
 type Head = {
-  title?: string
+  title?: string;
+  description?: string;
+  contentUrl?: string;
+  thumbnailUrl?: string;
 }
 
 type Bindings = {
