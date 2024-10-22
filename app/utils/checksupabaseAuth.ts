@@ -1,5 +1,4 @@
 import { getCookie } from "hono/cookie"
-import { useRequestContext } from 'hono/jsx-renderer'
 import { createClient } from "@supabase/supabase-js/dist/main/index.js";
 import { Context } from "hono";
 

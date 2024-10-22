@@ -19,9 +19,8 @@ export default createRoute(async (c) => {
     const f = await checksupabaseAuth(c)
     const contentUrl = `${config.siteURL}/plant/${id}/`
     let lstComment = ''
-    const length = logsWithPhotos.length
-    if (length >= 1) {
-        lstComment = logsWithPhotos[length - 1].comment
+    if (logsWithPhotos.length >= 1) {
+        lstComment = logsWithPhotos[0].comment
     }
     let twitterTitle = plant?.name || ''
     if (lstComment) {
