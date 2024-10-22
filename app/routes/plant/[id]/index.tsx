@@ -17,7 +17,7 @@ export default createRoute(async (c) => {
         return { ...log, photos }
     }))
     const f = await checksupabaseAuth(c)
-    const contentUrl = `${config.siteURL}/plant/${id}/`
+    const contentUrl = `${config.siteURL}/plant/${id}`
     let lstComment = ''
     if (logsWithPhotos.length >= 1) {
         lstComment = logsWithPhotos[0].comment
