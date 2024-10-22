@@ -17,9 +17,14 @@ export const Header = async () => {
                 <div>
                     <div>
                         {f && (
-                            <a href="/auth/plant/create" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                投稿
-                            </a>
+                            <div>
+                                <a href="/auth/plant/create" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mr-4">
+                                    投稿
+                                </a>
+                                <a href="/auth/logout" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                                    ログアウト
+                                </a>
+                            </div>
                         )}
                     </div>
                 </div>
