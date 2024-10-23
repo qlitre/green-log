@@ -1,4 +1,5 @@
 import type { FC } from 'hono/jsx'
+import { Button } from '../components/common/Button'
 
 type Data = {
   error?: Record<string, string[] | undefined>
@@ -8,10 +9,10 @@ type Data = {
 
 export const LoginForm: FC<{ data?: Data }> = ({ data }) => {
   return (
-    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+    <div className="p-6 max-w-md mx-auto space-y-4">
       <h1 className="text-2xl font-bold text-center">ログイン</h1>
       <div>
-        <form className="space-y-6" method='post' action='/login'>
+        <form className="" method='post' action='/login'>
           <div className="flex flex-col space-y-2">
             <label className="text-lg font-medium">メールアドレス：</label>
             <input
@@ -34,12 +35,9 @@ export const LoginForm: FC<{ data?: Data }> = ({ data }) => {
             {data?.error?.password && <p class="text-red-500 text-xs italic">{data.error.password}</p>}
           </div>
 
-          <button
-            type="submit"
-            className="w-full h-12 bg-blue-500 text-white text-lg font-bold rounded-md hover:bg-blue-600"
-          >
+          <Button className='mt-4' type="submit">
             ログイン
-          </button>
+          </Button>          
         </form>
       </div>
     </div>

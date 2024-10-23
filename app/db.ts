@@ -1,4 +1,4 @@
-import type { Plant, PlantLog, PlantPhoto } from "./types";
+import type { Plant, PlantLog, PlantPhoto } from "./@types/dbTypes";
 
 export const findAllPlants = async (db: D1Database) => {
     const { results } = await db.prepare('SELECT * FROM plants ORDER BY created_at DESC').all<Plant>()

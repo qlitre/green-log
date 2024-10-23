@@ -5,7 +5,6 @@ import { defineConfig } from 'vite'
 import pages from '@hono/vite-cloudflare-pages'
 
 export default defineConfig(({ mode }) => {
-
   if (mode === 'client') {
     return {
       plugins: [client()],

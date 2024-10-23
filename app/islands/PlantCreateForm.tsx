@@ -1,5 +1,6 @@
 import { useState } from "hono/jsx";
 import type { FC } from 'hono/jsx'
+import { Button } from '../components/common/Button'
 
 type Data = {
     error?: Record<string, string[] | undefined>
@@ -94,12 +95,7 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
                     />
 
                     <div class="flex items-center justify-between">
-                        <button
-                            type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        >
-                            Create
-                        </button>
+                        <Button type="submit">Create</Button>
                     </div>
                 </form>
             </div>

@@ -6,6 +6,8 @@ import { checksupabaseAuth } from '../../../utils/checksupabaseAuth'
 import { LinkToHome } from '../../../components/LinkToHome'
 import { ShareX } from '../../../components/ShareX'
 import { config, photoUrlTop } from '../../../settings/siteSettings'
+import { ButtonLink } from '../../../components/common/ButtonLink'
+import { Button } from '../../../components/common/Button'
 
 export default createRoute(async (c) => {
     const id = c.req.param('id')
@@ -32,11 +34,9 @@ export default createRoute(async (c) => {
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Growth History</h1>
                 {f && (
-                    <a
-                        href={`/auth/plant/${id}/create`}
-                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    <ButtonLink href={`/auth/plant/${id}/create`}>
                         Add Log
-                    </a>
+                    </ButtonLink>
                 )}
             </div>
 

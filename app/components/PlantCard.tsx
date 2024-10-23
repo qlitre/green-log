@@ -1,4 +1,4 @@
-import type { Plant } from '../types'
+import type { Plant } from '../@types/dbTypes'
 import { photoUrlTop } from '../settings/siteSettings'
 
 type Props = {

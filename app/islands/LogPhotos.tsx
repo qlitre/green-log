@@ -1,5 +1,5 @@
 import { useState } from 'hono/jsx'
-import { PlantPhoto } from '../types'
+import { PlantPhoto } from '../@types/dbTypes'
 import { photoUrlTop } from '../settings/siteSettings'
 
 type Props = {
