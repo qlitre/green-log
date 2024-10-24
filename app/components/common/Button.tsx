@@ -10,7 +10,9 @@ type Props = BaseProps & {
 };
 
 export const Button = (props: Props) => {
-    const commonClasses = `rounded ${buttonSizes[props.size || 'md']} ${buttonVariants[props.variant || 'primary']} font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 inline-flex items-center gap-x-1.5 text-center`;
+    const _variant = props.variant ?? 'primary'
+    const _size = props.size ?? 'md'
+    const commonClasses = `rounded ${buttonSizes[_size]} ${buttonVariants[_variant]} font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 inline-flex items-center gap-x-1.5 text-center`;
     return (
         <button
             type={props.type}
