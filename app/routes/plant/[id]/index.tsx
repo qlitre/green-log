@@ -7,7 +7,6 @@ import { LinkToHome } from '../../../components/LinkToHome'
 import { ShareX } from '../../../components/ShareX'
 import { config, photoUrlTop } from '../../../settings/siteSettings'
 import { ButtonLink } from '../../../components/common/ButtonLink'
-import { Button } from '../../../components/common/Button'
 
 export default createRoute(async (c) => {
     const id = c.req.param('id')

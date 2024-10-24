@@ -1,7 +1,6 @@
 import type { BaseProps } from '../../@types/common';
 import { buttonSizes, buttonVariants } from '../../styles/buttonStyles'
 
-
 type Props = BaseProps & {
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     variant?: "primary" | "secondary" | "primaryDark" | "secondaryDark" | "soft" | "rounded";

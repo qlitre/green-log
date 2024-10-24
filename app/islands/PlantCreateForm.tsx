@@ -12,12 +12,14 @@ type Data = {
 
 export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
     const [thumbnailKey, setThumbnailKey] = useState(data?.thumbnail_key || '');
+    const [fileUploadError, setFileUploadError] = useState('')
     const handleFileUpload = async (event: Event) => {
+        setFileUploadError('')
         const target = event.target as HTMLInputElement;
         const file = target.files?.[0];
 
         if (!file) {
-            console.log('No file selected');
+            setFileUploadError('No file selected')
             return;
         }
         const formData = new FormData();
@@ -30,7 +32,11 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
         const result: { success: boolean, key?: string, error?: string } = await response.json();
         if (result.success) {
             const key = result.key
+
             if (key) setThumbnailKey(key);  // URLを保存し、フォームに反映                        
+        } else {
+            setFileUploadError(result.error ?? '')
+            target.value = ''
         }
     };
 
@@ -73,6 +79,7 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                         {data?.error?.description && <p class="text-red-500 text-xs italic">{data.error.description}</p>}
+
                     </div>
 
                     <div>
@@ -84,6 +91,7 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                         {data?.error?.thumbnail_key && <p class="text-red-500 text-xs italic">{data.error.thumbnail_key}</p>}
+                        {fileUploadError && <p class="text-red-500 text-xs italic">{fileUploadError}</p>}
                     </div>
 
                     {/* サムネイルURLが自動で入力される */}
