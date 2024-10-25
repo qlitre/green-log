@@ -5,78 +5,29 @@ import { Button } from "../components/common/Button";
 type Data = {
     error?: Record<string, string[] | undefined>
     comment?: string;
-    photoKey1?: string;
-    photoKey2?: string;
-    photoKey3?: string
+    photoKeys?: string[];
 }
 
 type Props = {
     plantId: string
 }
 
-type KeyNum = 1 | 2 | 3
 
 export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, props }) => {
-    const [photoKey1, setPhotoKey1] = useState(data?.photoKey1 || '');
-    const [photoKey2, setPhotoKey2] = useState(data?.photoKey2 || '');
-    const [photoKey3, setPhotoKey3] = useState(data?.photoKey3 || '');
-    const [fileUploadError1, setFileUploadError1] = useState('')
-    const [fileUploadError2, setFileUploadError2] = useState('')
-    const [fileUploadError3, setFileUploadError3] = useState('')
+    const [photoKeys, setPhotoKeys] = useState(data?.photoKeys || ['', '', ''])
+    const [fileUploadErrors, setFileUploadErrors] = useState(['', '', ''])
 
-
-    const FileInput = (keyNum: KeyNum) => {
-        return (
-            <div>
-                <label htmlFor="photo1" class="block text-gray-700 text-sm font-bold mb-2">Photo{keyNum}</label>
-                <input
-                    id={`photo${keyNum}`}
-                    type="file"
-                    onChange={(event) => handleFileUpload(event, keyNum)}
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                {data?.error?.[`photoKey${keyNum}`] && (
-                    <p className="text-red-500 text-xs italic">{data.error[`photoKey${keyNum}`]}</p>
-                )}
-                <div>
-                    {keyNum == 1 && fileUploadError1 && (
-                        <p className="text-red-500 text-xs italic">{fileUploadError1}</p>
-                    )}
-                </div>
-                {keyNum == 2 && fileUploadError2 && (
-                    <p className="text-red-500 text-xs italic">{fileUploadError2}</p>
-                )}
-                {keyNum == 3 && fileUploadError3 && (
-                    <p className="text-red-500 text-xs italic">{fileUploadError3}</p>
-                )}
-            </div>
-        )
-    }
-
-    const FileForm = (keyNum: KeyNum) => {
-        const d = { 1: photoKey1, 2: photoKey2, 3: photoKey3 }
-        return (
-            <input
-                id={`photoKey${keyNum}`}
-                type="hidden"
-                name={`photoKey${keyNum}`}
-                value={d[keyNum]}
-            />
-
-        )
-    }
-
-    const handleFileUpload = async (event: Event, keyNum: KeyNum) => {
+    const handleFileUpload = async (event: Event, index: number) => {
         const target = event.target as HTMLInputElement;
         const file = target.files?.[0];
-        if (keyNum == 1) setFileUploadError1('')
-        if (keyNum == 2) setFileUploadError2('')
-        if (keyNum == 3) setFileUploadError3('')
+        const newErrors = [...fileUploadErrors]
+        const newPhotoKeys = [...photoKeys]
 
         if (!file) {
-            if (keyNum == 1) setFileUploadError1('No file selected')
-            if (keyNum == 2) setFileUploadError2('No file selected')
-            if (keyNum == 3) setFileUploadError3('No file selected')
+            newErrors[index] = 'No file Selected'
+            setFileUploadErrors(newErrors)
+            newPhotoKeys[index] = '';
+            setPhotoKeys(newPhotoKeys)
             return;
         }
         const formData = new FormData();
@@ -87,18 +38,17 @@ export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, pr
             body: formData
         });
         const result: { success: boolean, key?: string, error?: string } = await response.json();
-        if (result.success) {
-            const key = result.key
-            if (key) {
-                if (keyNum == 1) setPhotoKey1(key)
-                if (keyNum == 2) setPhotoKey2(key)
-                if (keyNum == 3) setPhotoKey3(key)
-            };
+        if (result.success && result.key) {
+            newErrors[index] = ''
+            setFileUploadErrors(newErrors)
+            newPhotoKeys[index] = result.key;
+            setPhotoKeys(newPhotoKeys)
         } else {
             target.value = ''
-            if (keyNum == 1) setFileUploadError1(result.error ?? '')
-            if (keyNum == 2) setFileUploadError2(result.error ?? '')
-            if (keyNum == 3) setFileUploadError3(result.error ?? '')
+            newErrors[index] = result.error ?? '';
+            setFileUploadErrors(newErrors)
+            newPhotoKeys[index] = '';
+            setPhotoKeys(newPhotoKeys)
         }
     };
 
@@ -122,12 +72,28 @@ export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, pr
                             />
                         </div>
                     </div>
-                    {FileInput(1)}
-                    {FileForm(1)}
-                    {FileInput(2)}
-                    {FileForm(2)}
-                    {FileInput(3)}
-                    {FileForm(3)}
+                    {photoKeys.map((photoKey, index) => (
+                        <div key={index}>
+                            <label htmlFor={`photo${index + 1}`} className="block text-gray-700 text-sm font-bold mb-2">Photo {index + 1}</label>
+                            <input
+                                id={`photo${index + 1}`}
+                                type="file"
+                                onChange={(event) => handleFileUpload(event, index)}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            />
+                            {data?.error?.[`photoKey${index + 1}`] && (
+                                <p className="text-red-500 text-xs italic">{data.error[`photoKey${index + 1}`]}</p>
+                            )}
+                            {fileUploadErrors[index] && (
+                                <p className="text-red-500 text-xs italic">{fileUploadErrors[index]}</p>
+                            )}
+                            <input
+                                type="hidden"
+                                name={`photoKey${index + 1}`}
+                                value={photoKey}
+                            />
+                        </div>
+                    ))}
                     <div class="flex items-center justify-between">
                         <Button type="submit">Create</Button>
                     </div>
