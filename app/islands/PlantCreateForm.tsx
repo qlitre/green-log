@@ -2,6 +2,7 @@ import { useState } from "hono/jsx";
 import type { FC } from 'hono/jsx'
 import { Button } from '../components/common/Button'
 import { photoUrlTop } from "../settings/siteSettings";
+import { ImagePreview } from "../components/common/ImagePreview";
 
 type Data = {
     error?: Record<string, string[] | undefined>
@@ -14,7 +15,7 @@ type Data = {
 export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
     const [thumbnailKey, setThumbnailKey] = useState(data?.thumbnail_key || '');
     const [fileUploadError, setFileUploadError] = useState('')
-    const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+    const [thumbnailPreview, setThumbnailPreview] = useState('');
 
     const handleFileUpload = async (event: Event) => {
         setFileUploadError('')
@@ -90,24 +91,11 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
                             id="thumbnail_file"
                             type="file"
                             onChange={handleFileUpload}  // ファイルが選択されたときにアップロードする
-                            class=""
                         />
                         {data?.error?.thumbnail_key && <p class="text-red-500 text-xs italic">{data.error.thumbnail_key}</p>}
                         {fileUploadError && <p class="text-red-500 text-xs italic">{fileUploadError}</p>}
 
-                        <div
-                            className="mt-2 border-2 border-dashed rounded-lg p-4 flex items-center justify-center"
-                            style={{ width: '300px', height: '200px' }}>
-                            {thumbnailPreview ? (
-                                <img
-                                    src={thumbnailPreview}
-                                    alt="Thumbnail Preview"
-                                    style={{ maxWidth: '100%', maxHeight: '100%' }}
-                                />
-                            ) : (
-                                <p className="text-gray-500">プレビュー</p>
-                            )}
-                        </div>
+                        <ImagePreview imgUrl={thumbnailPreview}></ImagePreview>
                     </div>
 
                     {/* サムネイルURLが自動で入力される */}
@@ -117,7 +105,6 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
                         name="thumbnail_key"
                         value={thumbnailKey}
                     />
-
                     <div class="flex items-center justify-between">
                         <Button type="submit">Create</Button>
                     </div>

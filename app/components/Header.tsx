@@ -1,28 +1,27 @@
 import { useRequestContext } from "hono/jsx-renderer";
 import { checksupabaseAuth } from "../utils/checksupabaseAuth";
-import { config } from '../settings/siteSettings'
+import { config } from '../settings/siteSettings';
 import { ButtonLink } from "./common/ButtonLink";
 
 export const Header = async () => {
-    const c = useRequestContext()
-    const f = await checksupabaseAuth(c)
+    const c = useRequestContext();
+    const f = await checksupabaseAuth(c);
     return (
-        <header className="p-4">
-            <div className="container mx-auto flex justify-between items-center">
+        <header className="p-4 c-wrapper">
+            <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
                 <div className="text-xl font-bold">
-                    <a href="/" className="hover:text-gray-300">
+                    <a href="/" className="hover:text-gray-600">
                         {config.siteTitle}
                     </a>
                 </div>
-                <div>
-                    <div>
-                        {f && (
-                            <div className="space-x-4"> {/* ボタン間に余白を追加 */}
-                                <ButtonLink href="/auth/plant/create">投稿</ButtonLink>
-                                <ButtonLink href="/auth/logout">ログアウト</ButtonLink>
-                            </div>
-                        )}
-                    </div>
+                <div className="mt-4 md:mt-0"> {/* モバイルでの余白調整 */}
+                    {f && (
+                        <div className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0 items-center">
+                            {/* ボタンをモバイルでは縦並び、デスクトップでは横並びに */}
+                            <ButtonLink href="/auth/plant/create">投稿</ButtonLink>
+                            <ButtonLink href="/auth/logout">ログアウト</ButtonLink>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

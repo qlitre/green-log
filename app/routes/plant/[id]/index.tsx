@@ -29,7 +29,7 @@ export default createRoute(async (c) => {
     }
 
     return c.render(
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <div className='c-container'>
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Growth History</h1>
                 {f && (
