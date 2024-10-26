@@ -1,12 +1,13 @@
 import { createRoute } from 'honox/factory'
-import { findPlantById, findPlantLogsByPlantId, findPlantPhotosByPlantLogId } from '../../../db'
-import { LogPhotos } from '../../../islands/LogPhotos'
-import { jstDatetime } from '../../../utils/jstDatetime'
-import { checksupabaseAuth } from '../../../utils/checksupabaseAuth'
-import { LinkToHome } from '../../../components/LinkToHome'
-import { ShareX } from '../../../components/ShareX'
-import { config, photoUrlTop } from '../../../settings/siteSettings'
-import { ButtonLink } from '../../../components/common/ButtonLink'
+import { findPlantById, findPlantLogsByPlantId, findPlantPhotosByPlantLogId } from '../../db'
+import { LogPhotos } from '../../islands/LogPhotos'
+import { jstDatetime } from '../../utils/jstDatetime'
+import { checksupabaseAuth } from '../../utils/checksupabaseAuth'
+import { LinkToHome } from '../../components/LinkToHome'
+import { ShareX } from '../../components/ShareX'
+import { config, photoUrlTop } from '../../settings/siteSettings'
+import { ButtonLink } from '../../components/common/ButtonLink'
+import { Carousel } from '../../islands/Carousel'
 
 export default createRoute(async (c) => {
     const id = c.req.param('id')
@@ -30,10 +31,13 @@ export default createRoute(async (c) => {
 
     return c.render(
         <div className='c-container'>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0 sm:space-x-4">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Growth History</h1>
+                <ButtonLink href={`/plant/${id}/carousel`}>
+                    View Carousel
+                </ButtonLink>
                 {f && (
-                    <ButtonLink href={`/auth/plant/${id}/create`}>
+                    <ButtonLink href={`/auth/plant/${id}/create`} className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
                         Add Log
                     </ButtonLink>
                 )}
