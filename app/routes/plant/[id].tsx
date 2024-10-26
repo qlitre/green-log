@@ -33,14 +33,16 @@ export default createRoute(async (c) => {
         <div className='c-container'>
             <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0 sm:space-x-4">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Growth History</h1>
-                <ButtonLink href={`/plant/${id}/carousel`}>
-                    View Carousel
-                </ButtonLink>
-                {f && (
-                    <ButtonLink href={`/auth/plant/${id}/create`} className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">
-                        Add Log
+                <div className="space-x-4">
+                    <ButtonLink href={`/plant/${id}/carousel`}>
+                        View Carousel
                     </ButtonLink>
-                )}
+                    {f && (
+                        <ButtonLink href={`/auth/plant/${id}/create`}>
+                            Add Log
+                        </ButtonLink>
+                    )}
+                </div>
             </div>
 
             <div className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
