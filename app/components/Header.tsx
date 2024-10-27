@@ -14,15 +14,13 @@ export const Header = async () => {
                         {config.siteTitle}
                     </a>
                 </div>
-                <div className="mt-4 md:mt-0"> {/* モバイルでの余白調整 */}
+                <div className="mt-4 md:mt-0">
                     <div className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0 items-center">
-
                         {f && (
                             <>
                                 {/* ボタンをモバイルでは縦並び、デスクトップでは横並びに */}
                                 <ButtonLink href="/auth/plant/create">投稿</ButtonLink>
                                 <ButtonLink href="/auth/logout">ログアウト</ButtonLink>
-                                {/** aタグでgithubのシンプルなリンク */}
                             </>
                         )}
                         <a className="font-bold hover:text-gray-600 text-lg" href={config.repos} target="_blank" rel="noopener noreferrer">
