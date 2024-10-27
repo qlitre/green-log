@@ -1,6 +1,8 @@
 import { useState } from "hono/jsx";
 import type { FC } from 'hono/jsx'
 import { Button } from "../components/common/Button";
+import { ImagePreview } from "../components/common/ImagePreview";
+import { photoUrlTop } from "../settings/siteSettings";
 
 type Data = {
     error?: Record<string, string[] | undefined>
@@ -16,18 +18,22 @@ type Props = {
 export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, props }) => {
     const [photoKeys, setPhotoKeys] = useState(data?.photoKeys || ['', '', ''])
     const [fileUploadErrors, setFileUploadErrors] = useState(['', '', ''])
+    const [thumbnailPreviews, setThumbnailPreviews] = useState(['', '', ''])
 
     const handleFileUpload = async (event: Event, index: number) => {
         const target = event.target as HTMLInputElement;
         const file = target.files?.[0];
         const newErrors = [...fileUploadErrors]
         const newPhotoKeys = [...photoKeys]
+        const newThumbnailPreviews = [...thumbnailPreviews]
 
         if (!file) {
             newErrors[index] = 'No file Selected'
             setFileUploadErrors(newErrors)
             newPhotoKeys[index] = '';
             setPhotoKeys(newPhotoKeys)
+            newThumbnailPreviews[index] = '';
+            setThumbnailPreviews(newThumbnailPreviews)
             return;
         }
         const formData = new FormData();
@@ -43,12 +49,17 @@ export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, pr
             setFileUploadErrors(newErrors)
             newPhotoKeys[index] = result.key;
             setPhotoKeys(newPhotoKeys)
+            const photoUrl = photoUrlTop + '/' + result.key
+            newThumbnailPreviews[index] = photoUrl;
+            setThumbnailPreviews(newThumbnailPreviews)
         } else {
             target.value = ''
             newErrors[index] = result.error ?? '';
             setFileUploadErrors(newErrors)
             newPhotoKeys[index] = '';
             setPhotoKeys(newPhotoKeys)
+            newThumbnailPreviews[index] = '';
+            setThumbnailPreviews(newThumbnailPreviews)
         }
     };
 
@@ -72,28 +83,31 @@ export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, pr
                             />
                         </div>
                     </div>
-                    {photoKeys.map((photoKey, index) => (
-                        <div key={index}>
-                            <label htmlFor={`photo${index + 1}`} className="block text-gray-700 text-sm font-bold mb-2">Photo {index + 1}</label>
-                            <input
-                                id={`photo${index + 1}`}
-                                type="file"
-                                onChange={(event) => handleFileUpload(event, index)}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            />
-                            {data?.error?.[`photoKey${index + 1}`] && (
-                                <p className="text-red-500 text-xs italic">{data.error[`photoKey${index + 1}`]}</p>
-                            )}
-                            {fileUploadErrors[index] && (
-                                <p className="text-red-500 text-xs italic">{fileUploadErrors[index]}</p>
-                            )}
-                            <input
-                                type="hidden"
-                                name={`photoKey${index + 1}`}
-                                value={photoKey}
-                            />
-                        </div>
-                    ))}
+                    <div className='flex flex-col space-y-4 lg:flex-row lg:space-x-8 lg:space-y-0'>
+                        {photoKeys.map((photoKey, index) => (
+                            <div key={index}>
+                                <label htmlFor={`photo${index + 1}`} className="block text-gray-700 text-sm font-bold mb-2">Photo {index + 1}</label>
+                                <input
+                                    id={`photo${index + 1}`}
+                                    type="file"
+                                    onChange={(event) => handleFileUpload(event, index)}
+                                />
+                                {data?.error?.[`photoKey${index + 1}`] && (
+                                    <p className="text-red-500 text-xs italic">{data.error[`photoKey${index + 1}`]}</p>
+                                )}
+                                {fileUploadErrors[index] && (
+                                    <p className="text-red-500 text-xs italic">{fileUploadErrors[index]}</p>
+                                )}
+                                <ImagePreview imgUrl={thumbnailPreviews[index]}></ImagePreview>
+                                <input
+                                    type="hidden"
+                                    name={`photoKey${index + 1}`}
+                                    value={photoKey}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
                     <div class="flex items-center justify-between">
                         <Button type="submit">Create</Button>
                     </div>
