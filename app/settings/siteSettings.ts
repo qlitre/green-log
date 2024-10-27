@@ -10,7 +10,7 @@ export const config = {
     // meta descriptionに表示
     siteDescription: 'QLITREの植物成長記録サイト',
     // HeaderのGitHUBリンク
-    repos: 'https://github.com/qlitre/qlitre-green-log',
+    repos: 'https://github.com/qlitre/green-log',
     // Aboutページのリンク
     about: 'https://qlitre.me',
     twitterURL: 'https://twitter.com/kuri_tter',
