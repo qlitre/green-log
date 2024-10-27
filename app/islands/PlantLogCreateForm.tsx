@@ -1,8 +1,8 @@
 import { useState } from "hono/jsx";
 import type { FC } from 'hono/jsx'
 import { Button } from "../components/common/Button";
-import { ImagePreview } from "../components/common/ImagePreview";
 import { photoUrlTop } from "../settings/siteSettings";
+import { ImageInput } from "../components/common/ImageInput";
 
 type Data = {
     error?: Record<string, string[] | undefined>
@@ -13,7 +13,6 @@ type Data = {
 type Props = {
     plantId: string
 }
-
 
 export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, props }) => {
     const [photoKeys, setPhotoKeys] = useState(data?.photoKeys || ['', '', ''])
@@ -86,19 +85,15 @@ export const PlantLogCreateForm: FC<{ data?: Data, props: Props }> = ({ data, pr
                     <div className='flex flex-col space-y-4 lg:flex-row lg:space-x-8 lg:space-y-0'>
                         {photoKeys.map((photoKey, index) => (
                             <div key={index}>
-                                <label htmlFor={`photo${index + 1}`} className="block text-gray-700 text-sm font-bold mb-2">Photo {index + 1}</label>
-                                <input
-                                    id={`photo${index + 1}`}
-                                    type="file"
-                                    onChange={(event) => handleFileUpload(event, index)}
-                                />
-                                {data?.error?.[`photoKey${index + 1}`] && (
-                                    <p className="text-red-500 text-xs italic">{data.error[`photoKey${index + 1}`]}</p>
-                                )}
-                                {fileUploadErrors[index] && (
-                                    <p className="text-red-500 text-xs italic">{fileUploadErrors[index]}</p>
-                                )}
-                                <ImagePreview imgUrl={thumbnailPreviews[index]}></ImagePreview>
+                                <div>
+                                    <ImageInput title={`Photo${index + 1}`} inputId={`photo${index + 1}`} thumbnailPreview={thumbnailPreviews[index]} onChange={(event) => handleFileUpload(event, index)} />
+                                    {data?.error?.[`photoKey${index + 1}`] && (
+                                        <p className="text-red-500 text-xs italic">{data.error[`photoKey${index + 1}`]}</p>
+                                    )}
+                                    {fileUploadErrors[index] && (
+                                        <p className="text-red-500 text-xs italic">{fileUploadErrors[index]}</p>
+                                    )}
+                                </div>
                                 <input
                                     type="hidden"
                                     name={`photoKey${index + 1}`}

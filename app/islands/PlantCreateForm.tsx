@@ -2,7 +2,7 @@ import { useState } from "hono/jsx";
 import type { FC } from 'hono/jsx'
 import { Button } from '../components/common/Button'
 import { photoUrlTop } from "../settings/siteSettings";
-import { ImagePreview } from "../components/common/ImagePreview";
+import { ImageInput } from "../components/common/ImageInput";
 
 type Data = {
     error?: Record<string, string[] | undefined>
@@ -60,7 +60,6 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
                         />
                         {data?.error?.name && <p class="text-red-500 text-xs italic">{data.error.name}</p>}
                     </div>
-
                     <div>
                         <label htmlFor="species" class="block text-gray-700 text-sm font-bold mb-2">Species</label>
                         <input
@@ -84,18 +83,9 @@ export const PlantCreateForm: FC<{ data?: Data }> = ({ data }) => {
                         {data?.error?.description && <p class="text-red-500 text-xs italic">{data.error.description}</p>}
                     </div>
                     <div>
-                        <label htmlFor="thumbnail_url" class="block text-gray-700 text-sm font-bold mb-2">
-                            サムネイル
-                        </label>
-                        <input
-                            id="thumbnail_file"
-                            type="file"
-                            onChange={handleFileUpload}  // ファイルが選択されたときにアップロードする
-                        />
+                        <ImageInput title="サムネイル" inputId="thumbnail_file" thumbnailPreview={thumbnailPreview} onChange={handleFileUpload} />
                         {data?.error?.thumbnail_key && <p class="text-red-500 text-xs italic">{data.error.thumbnail_key}</p>}
                         {fileUploadError && <p class="text-red-500 text-xs italic">{fileUploadError}</p>}
-
-                        <ImagePreview imgUrl={thumbnailPreview}></ImagePreview>
                     </div>
 
                     {/* サムネイルURLが自動で入力される */}
