@@ -22,8 +22,8 @@ export const POST = createRoute(
         const plantId = c.req.param('id')
         const props = { plantId: plantId }
         if (!result.success) {
-            const { comment, photoKey1 } = result.data
-            return c.render(<PlantLogCreateForm data={{ comment, photoKey1, error: result.error.flatten().fieldErrors }} props={props} />)
+            const { comment, photoKey1, photoKey2, photoKey3 } = result.data
+            return c.render(<PlantLogCreateForm data={{ comment: comment, photoKeys: [photoKey1, photoKey2, photoKey3], error: result.error.flatten().fieldErrors }} props={props} />)
         }
     }),
     async (c) => {

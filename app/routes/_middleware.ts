@@ -9,7 +9,8 @@ export const supabaseMiddleware = createMiddleware(async (c, next) => {
             await next()
             return
         } else {
-            return c.redirect('/', 303)
+            c.status(403)
+            return c.text('403 Forbidden: You do not have permission to access this resource.')
         }
     }
     await next()
