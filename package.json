@@ -11,9 +11,9 @@
   "dependencies": {
     "@hono/vite-cloudflare-pages": "^0.4.2",
     "@hono/zod-validator": "^0.4.1",
-    "@supabase/supabase-js": "^2.45.6",
     "dayjs": "^1.11.13",
-    "hono": "^4.6.5",
+    "firebase": "^11.0.1",
+    "hono": "^4.6.9",
     "honox": "^0.1.26"
   },
   "devDependencies": {

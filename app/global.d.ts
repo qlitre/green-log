@@ -11,8 +11,12 @@ type Head = {
 type Bindings = {
   DB: D1Database;
   MY_BUCKET: R2Bucket;
-  PROJECT_URL: string;
   API_KEY: string;
+  AUTH_DOMAIN: string;
+  PROJECT_ID: string;
+  STORAGE_BUCKET: string;
+  MASSAGING_SENDER_ID: string;
+  APP_ID: string;
 }
 
 declare module 'hono' {

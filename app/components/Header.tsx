@@ -1,11 +1,11 @@
 import { useRequestContext } from "hono/jsx-renderer";
-import { checksupabaseAuth } from "../utils/checksupabaseAuth";
+import { checkauth } from "../utils/checkauth";
 import { config } from '../settings/siteSettings';
 import { ButtonLink } from "./common/ButtonLink";
 
 export const Header = async () => {
     const c = useRequestContext();
-    const f = await checksupabaseAuth(c);
+    const f = await checkauth(c);
     return (
         <header className="p-4 c-wrapper">
             <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">

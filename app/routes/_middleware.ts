@@ -1,10 +1,10 @@
 import { createRoute } from 'honox/factory'
 import { createMiddleware } from 'hono/factory'
-import { checksupabaseAuth } from '../utils/checksupabaseAuth';
+import { checkauth } from '../utils/checkauth';
 
-export const supabaseMiddleware = createMiddleware(async (c, next) => {
+export const authMiddleware = createMiddleware(async (c, next) => {
     if (c.req.path.startsWith('/auth')) {
-        const f = await checksupabaseAuth(c)
+        const f = await checkauth(c)
         if (f) {
             await next()
             return
@@ -16,4 +16,4 @@ export const supabaseMiddleware = createMiddleware(async (c, next) => {
     await next()
 })
 
-export default createRoute(supabaseMiddleware)
+export default createRoute(authMiddleware)

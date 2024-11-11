@@ -2,7 +2,7 @@ import { createRoute } from 'honox/factory'
 import { findPlantById, findPlantLogsByPlantId, findPlantPhotosByPlantLogId } from '../../db'
 import { LogPhotos } from '../../islands/LogPhotos'
 import { jstDatetime } from '../../utils/jstDatetime'
-import { checksupabaseAuth } from '../../utils/checksupabaseAuth'
+import { checkauth } from '../../utils/checkauth'
 import { LinkToHome } from '../../components/LinkToHome'
 import { ShareX } from '../../components/ShareX'
 import { config, photoUrlTop } from '../../settings/siteSettings'
@@ -18,7 +18,7 @@ export default createRoute(async (c) => {
         const photos = await findPlantPhotosByPlantLogId(db, log.id)
         return { ...log, photos }
     }))
-    const f = await checksupabaseAuth(c)
+    const f = await checkauth(c)
     const contentUrl = `${config.siteURL}/plant/${id}`
     let lstComment = ''
     if (logsWithPhotos.length >= 1) {

@@ -21,7 +21,7 @@ export const LoginForm: FC<{ data?: Data }> = ({ data }) => {
               value={data?.email}
               className="h-12 px-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {data?.error?.email && <p class="text-red-500 text-xs italic">{data.error.email}</p>}
+            {data?.error?.email && <p className="text-red-500 text-xs italic">{data.error.email}</p>}
           </div>
 
           <div className="flex flex-col space-y-2">
@@ -32,12 +32,16 @@ export const LoginForm: FC<{ data?: Data }> = ({ data }) => {
               value={data?.password}
               className="h-12 px-4 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {data?.error?.password && <p class="text-red-500 text-xs italic">{data.error.password}</p>}
+            {data?.error?.password && <p className="text-red-500 text-xs italic">{data.error.password}</p>}
           </div>
+          {/* ログイン失敗時の全体エラー表示 */}
+          {data?.error?.login && (
+            <p className="text-red-500 text-xs italic">{data.error.login.join(', ')}</p>
+          )}
 
           <Button className='mt-4' type="submit">
             ログイン
-          </Button>          
+          </Button>
         </form>
       </div>
     </div>
