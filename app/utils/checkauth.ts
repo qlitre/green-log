@@ -1,17 +1,53 @@
 import { Context } from "hono";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../firebase'
+import { getCookie } from "hono/cookie";
+import { setCookie } from "hono/cookie"
 
 export const checkauth = async (c: Context): Promise<boolean> => {
-    const _auth = auth(c)
-    // Promise を使用して認証状態を待機
-    return new Promise((resolve) => {
-        onAuthStateChanged(_auth, (user) => {
-            if (user) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+    try {
+        // クッキーから `firebase_token` を取得
+        const idToken = getCookie(c, 'firebase_token');
+        if (!idToken) {
+            console.log('No token found');
+            return false;
+        }
+
+        // Firebase Authentication REST API エンドポイント
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${c.env.API_KEY}`;
+
+        // トークンの検証リクエストを送信
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ idToken }),
         });
-    });
+
+        // レスポンスが正常でない場合はエラー
+        if (!response.ok) {
+            console.error('Invalid token response:', await response.text());
+            return false;
+        }
+        interface FirebaseResponse {
+            users: Array<{
+                localId: string;
+                email: string;
+                emailVerified: boolean;
+                displayName?: string;
+            }>;
+        }
+        // ユーザー情報を取得
+        const data: FirebaseResponse = await response.json();
+        const user = data.users?.[0];
+        if (!user) {
+            console.log('No user data found');
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Token verification failed:', error);
+    }
+
+    // トークンが無効な場合
+    return false;
 };

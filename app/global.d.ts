@@ -17,6 +17,8 @@ type Bindings = {
   STORAGE_BUCKET: string;
   MASSAGING_SENDER_ID: string;
   APP_ID: string;
+  CLIENT_EMAIL: string;
+  PRIVATE_KEY: string;
 }
 
 declare module 'hono' {

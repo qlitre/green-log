@@ -4,6 +4,7 @@ import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 import { signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from 'firebase/auth'
 import { auth } from '../firebase'
+import { setCookie } from 'hono/cookie'
 
 const schema = z.object({
     email: z.string().min(1).includes('@'),
@@ -30,10 +31,14 @@ export const POST = createRoute(
         try {
             // セッション持続性を設定（ブラウザセッションのみ）
             //await setPersistence(_auth, browserSessionPersistence);
-
             // ログイン処理
             const data = await signInWithEmailAndPassword(_auth, email, password);
             if (data.user) {
+                const idToken = await data.user.getIdToken();
+                setCookie(c, 'firebase_token', idToken, {
+                    httpOnly: true,
+                    sameSite: 'strict'
+                })
                 // ログイン成功時にリダイレクト
                 return c.redirect('/', 303);
             }
