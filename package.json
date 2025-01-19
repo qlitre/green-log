@@ -13,8 +13,8 @@
     "@hono/zod-validator": "^0.4.1",
     "dayjs": "^1.11.13",
     "firebase": "^11.0.1",
-    "hono": "^4.6.9",
-    "honox": "^0.1.26"
+    "hono": "^4.6.17",
+    "honox": "^0.1.32"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
